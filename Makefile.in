@@ -1,0 +1,84 @@
+
+CFLAGS ?=-Wall
+
+
+BIN_ROOT ?=bin
+OBJ_ROOT ?=obj
+SRC ?=src
+ARCH ?=x86
+
+ifeq ($(ARCH),wandboard)
+CFLAG +=-mthumb -O3 -march=armv7-a -mcpu=cortex-a9 -mtune=cortex-a9 -mfpu=neon -mvectorize-with-neon-quad -mfloat-abi=softfp
+endif
+
+ifeq ($(DEBUG),y)
+CFLAGS+=-g
+endif
+
+ifeq ($(USE_SOCKET),y)
+LIB_PATH+=-L $(ZLIB)/socket/lib/$(ARCH)
+LIB+=-l pthread -l socket
+INCLUDE_DIR+=-I $(ZLIB)/socket/include
+endif
+
+ifeq ($(USE_SERIAL),y)
+LIB_PATH+=-L $(ZLIB)/serial/lib/$(ARCH)
+LIB+=-l pthread -l serial
+INCLUDE_DIR+=-I $(ZLIB)/serial/include
+endif
+
+ifeq ($(USE_CRC),y)
+LIB_PATH+=-L $(ZLIB)/checksum/lib/$(ARCH)
+LIB+=-l checksum
+INCLUDE_DIR+=-I $(ZLIB)/checksum/include
+endif
+
+ifeq ($(USE_CONFIG),y)
+LIB_PATH+=-L $(ZLIB)/config/lib/$(ARCH)
+LIB+=-l config
+INCLUDE_DIR+=-I $(ZLIB)/config/include
+endif
+
+ifeq ($(USE_STR),y)
+LIB_PATH+=-L $(ZLIB)/str/lib/$(ARCH)
+LIB+=-l str
+INCLUDE_DIR+=-I $(ZLIB)/str/include
+endif
+
+ifeq ($(USE_UTIL),y)
+LIB_PATH+=-L $(ZLIB)/util/lib/$(ARCH)
+LIB+=-l util
+INCLUDE_DIR+=-I $(ZLIB)/util/include
+endif
+
+
+$(BIN_ROOT)/$(ARCH):$(BIN_ROOT)
+	mkdir $(BIN_ROOT)/$(ARCH)
+
+$(BIN_ROOT):
+	mkdir $(BIN_ROOT)
+
+$(OBJ_ROOT)/$(ARCH):$(OBJ_ROOT)
+	mkdir $(OBJ_ROOT)/$(ARCH)
+
+$(OBJ_ROOT):
+	mkdir $(OBJ_ROOT)
+
+$(OBJ_ROOT)/$(ARCH)/%.o:$(SRC)/%.c
+	$(CC) $(CFLAGS) $(INCLUDE_DIR) -c $< -o $@
+
+clean:
+	$(RM) $(BIN_NAME)
+	$(RM) $(OBJ_ROOT)/$(ARCH)/*.o
+	$(MAKE) -C doc clean
+
+cleanDebug:clean
+
+cleanRelease:clean
+
+doc:
+	$(MAKE) -C doc doc
+
+.PHONY: clean cleanDebug cleanRelease doc
+
+

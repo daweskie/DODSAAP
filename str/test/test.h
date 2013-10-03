@@ -3,4 +3,4 @@
 
 void testAll();
 
-#endif // TEST_H_INCLUDED
+#endif
