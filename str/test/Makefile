@@ -2,8 +2,7 @@
 
 DEBUG=y
 
-ZLIB=/home/zamek/c/zamek_lib
-
+ZLIB=/home/daweskie/c/LEAD/test/strutils
 USE_UTIL=y
 USE_STR=y
 SRC=.

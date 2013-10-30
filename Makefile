@@ -4,25 +4,18 @@ TEMPLATE_DIR=templates
 THIS=$(shell pwd)
 
 all:
-	$(MAKE) -C str all
-	$(MAKE) -C config all
-	$(MAKE) -C checksum all
-	$(MAKE) -C serial all
-	$(MAKE) -C socket all
+	$(MAKE) -C str
+	$(MAKE) -C util
+
 
 clean:
 	$(MAKE) -C str clean
-	$(MAKE) -C config clean
-	$(MAKE) -C checksum clean
-	$(MAKE) -C serial clean
-	$(MAKE) -C socket clean
+	$(MAKE) -C util clean
 
 doc:
 	$(MAKE) -C str doc
-	$(MAKE) -C config doc
-	$(MAKE) -C checksum doc
-	$(MAKE) -C serial doc
-	$(MAKE) -C socket doc
+	$(MAKE) -C util doc
+
 
 commit: clean
 	git add --all

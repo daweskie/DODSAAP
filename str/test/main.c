@@ -14,12 +14,13 @@
 
 /**
 FILE NAME: main.c
-AUTHOR: students of Embedded Systems faculty
+AUTHOR: David Dobo
 
 main of strutils
 */
 
 #include "test.h"
+
 
 int main ()
 {

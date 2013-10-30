@@ -26,12 +26,41 @@
 #define STRUTIL_H_INCLUDED
 
 #include <stdint.h>
+#include "macros.h"
+
+
 
 struct StringBuilder {
     uint16_t pos;
     size_t size;
     char *chars;
 };
+int strLen(const char *str)
+{
+    if ( !str || !*str )
+        return 0;
+
+    int i = 0;
+
+    while ( *str++ )
+        i++;
+
+    return i;
+}
+
+char *strDup(const char *str)
+{
+    if ( !str || !*str )
+        return NULL;
+
+    char *ch;
+
+    MALLOC( ch, strLen( str ) + 1 );
+
+    strcpy( ch, str );
+
+    return ch;
+}
 
 /**
  \defgroup strings String functions
@@ -222,7 +251,7 @@ strReverse
   \return the new reversed string
           Caller must free the copy
 */
-char *strReverse(const char *str);
+char *strReverse(const char *str2);
 
 /**
 strCapitalize
@@ -320,40 +349,4 @@ void strFreeBuilder(struct StringBuilder *builder);
 */
 void strClearBuilder(struct StringBuilder *builder);
 
-#endif // STRUTIL_H_INCLUDED
-
-
-
-
-
-
-
-
-
-
-char *str = "bela";
-char c;
-
-while (c=*str++)
-   if (!isalpha(c))
-     return 0;
-
-return 1;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#endif // STRUTIL_H_INCL

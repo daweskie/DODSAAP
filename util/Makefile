@@ -1,6 +1,6 @@
 # Make for C compiling
 
-ZLIB=/home/zamek/c/zamek_lib
+ZLIB=/home/daweskie/c/LEAD/test/strutils
 
 MODULE=util
 
